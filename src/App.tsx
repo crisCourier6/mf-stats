@@ -8,7 +8,7 @@ import UserStats from "./components/UserStats";
 function App() {
   return (
     <div className="App">
-      <Router>
+      <Router basename="/mf-stats">
           <Routes>
               <Route path="/stats" element={<UserStats isAppBarVisible={false} />}/>
           </Routes>
