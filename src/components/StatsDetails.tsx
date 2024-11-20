@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Box, Grid, Typography, Button, Snackbar, SnackbarCloseReason, Alert, TableContainer, Table, TableHead, TableRow, 
-    TableCell, Paper, TableBody, Slider, TextField, IconButton, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+    TableCell, Paper, TableBody, TextField, IconButton, Dialog, DialogTitle, DialogContent, DialogActions, CircularProgress } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import { CircularProgress } from "@mui/material";
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 import EditIcon from '@mui/icons-material/Edit';
 import { Stat } from '../interfaces/Stat';
 import dayjs from 'dayjs';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { UserHasStat } from '../interfaces/UserHasStat';
+import api from '../api';
 
 const StatsDetails: React.FC<{ isAppBarVisible: boolean }> = ({ isAppBarVisible }) => {
     const currentUserId = window.localStorage.getItem("id")
     const {id }= useParams()
-    const statsURL = "http://192.168.100.6:8080/stats"
-    const userStatsURL = "http://192.168.100.6:8080/users-stats"
+    const statsURL = "/stats"
+    const userStatsURL = "/users-stats"
     const [stat, setStat] = useState<Stat|null>(null)
     const [userStats, setUserStats] = useState<UserHasStat[]>([])
     const [showDeleteDialog, setShowDeleteDialog] = useState(false)
@@ -31,14 +30,14 @@ const StatsDetails: React.FC<{ isAppBarVisible: boolean }> = ({ isAppBarVisible 
     useEffect(() => {
         document.title = `Medidas - EyesFood`
         let userStatsQueryParams = `?u=${currentUserId}&s=${id}`
-        const fetchStat = axios.get(`${statsURL}/${id}`, {
+        const fetchStat = api.get(`${statsURL}/${id}`, {
             withCredentials: true,
             headers: {
                 Authorization: "Bearer " + window.localStorage.token
             }
         })
 
-        const fetchUserStats = axios.get(`${userStatsURL}${userStatsQueryParams}`, {
+        const fetchUserStats = api.get(`${userStatsURL}${userStatsQueryParams}`, {
             withCredentials: true,
             headers: {
                 Authorization: "Bearer " + window.localStorage.token
@@ -147,7 +146,7 @@ const StatsDetails: React.FC<{ isAppBarVisible: boolean }> = ({ isAppBarVisible 
             value: normalizedValue,
         };
 
-        axios.post(userStatsURL, newUserStat, {
+        api.post(userStatsURL, newUserStat, {
             withCredentials: true,
             headers: {
                 Authorization: "Bearer " + window.localStorage.token
@@ -179,7 +178,7 @@ const StatsDetails: React.FC<{ isAppBarVisible: boolean }> = ({ isAppBarVisible 
             value: normalizedValue,
         };
 
-        axios.patch(`${userStatsURL}/${selectedUserStat?.id}`, newUserStat, {
+        api.patch(`${userStatsURL}/${selectedUserStat?.id}`, newUserStat, {
             withCredentials: true,
             headers: {
                 Authorization: "Bearer " + window.localStorage.token
@@ -210,7 +209,7 @@ const StatsDetails: React.FC<{ isAppBarVisible: boolean }> = ({ isAppBarVisible 
 
     const submitDelete = () => {
         // Logic to submit new userHasStat entry
-        axios.delete(`${userStatsURL}/${selectedUserStat?.id}`, {
+        api.delete(`${userStatsURL}/${selectedUserStat?.id}`, {
             withCredentials: true,
             headers: {
                 Authorization: "Bearer " + window.localStorage.token

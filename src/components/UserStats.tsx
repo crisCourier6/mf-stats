@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Box, Card, CardContent, Grid, Typography, Button, Snackbar, SnackbarCloseReason, CardActions, Alert } from '@mui/material';
+import { Box, Card, CardContent, Grid, Typography, Button, Snackbar, SnackbarCloseReason, CardActions, Alert, CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { CircularProgress } from "@mui/material";
 import { Stat } from '../interfaces/Stat';
-import { truncate } from 'fs';
-import dayjs from 'dayjs';
 
 const UserStats: React.FC<{ isAppBarVisible: boolean }> = ({ isAppBarVisible }) => {
     const navigate = useNavigate()
