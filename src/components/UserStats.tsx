@@ -1,12 +1,8 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Box, Card, CardContent, CardMedia, Grid, IconButton, Paper, Typography, Button, Dialog, DialogActions, DialogContent, InputAdornment, TextField, Snackbar, SnackbarCloseReason, CardActions, Tooltip, Alert, DialogTitle } from '@mui/material';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Box, Card, CardContent, Grid, Typography, Button, Snackbar, SnackbarCloseReason, CardActions, Alert } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import { CircularProgress } from "@mui/material";
-import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
-import InsertLinkRoundedIcon from '@mui/icons-material/InsertLinkRounded';
-import ClearIcon from '@mui/icons-material/Clear'; // Import the clear icon
 import { Stat } from '../interfaces/Stat';
 import { truncate } from 'fs';
 import dayjs from 'dayjs';
@@ -16,12 +12,9 @@ const UserStats: React.FC<{ isAppBarVisible: boolean }> = ({ isAppBarVisible }) 
     const currentUserId = window.localStorage.getItem("id")
     const statsURL = "http://192.168.100.6:8080/stats"
     const [stats, setStats] = useState<Stat[]>([])
-    const [showDeleteDialog, setShowDeleteDialog] = useState(false)
     const [snackbarOpen, setSnackbarOpen] = useState(false)
     const [snackbarMsg, setSnackbarMsg] = useState("")
     const [allDone, setAllDone] = useState(false)
-    const [openNotification, setOpenNotification] = useState(false)
-    const [selectedNotification, setSelectedNotification] = useState<Stat | null>(null)
     
 
     useEffect(() => {

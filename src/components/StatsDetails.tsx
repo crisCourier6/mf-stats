@@ -1,19 +1,17 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Box, Grid, Typography, Button, Snackbar, SnackbarCloseReason, Alert, TableContainer, Table, TableHead, TableRow, TableCell, Paper, TableBody, Slider, TextField, IconButton, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Box, Grid, Typography, Button, Snackbar, SnackbarCloseReason, Alert, TableContainer, Table, TableHead, TableRow, 
+    TableCell, Paper, TableBody, Slider, TextField, IconButton, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import { useParams } from 'react-router-dom';
 import { CircularProgress } from "@mui/material";
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 import EditIcon from '@mui/icons-material/Edit';
 import { Stat } from '../interfaces/Stat';
-import { truncate } from 'fs';
 import dayjs from 'dayjs';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { UserHasStat } from '../interfaces/UserHasStat';
 
 const StatsDetails: React.FC<{ isAppBarVisible: boolean }> = ({ isAppBarVisible }) => {
-    const navigate = useNavigate()
     const currentUserId = window.localStorage.getItem("id")
     const {id }= useParams()
     const statsURL = "http://192.168.100.6:8080/stats"
