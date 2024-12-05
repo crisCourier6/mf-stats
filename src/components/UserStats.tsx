@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { Box, Card, CardContent, Grid, Typography, Button, Snackbar, SnackbarCloseReason, CardActions, Alert, CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { Stat } from '../interfaces/Stat';
 
 const UserStats: React.FC<{ isAppBarVisible: boolean }> = ({ isAppBarVisible }) => {
     const navigate = useNavigate()
-    const currentUserId = window.localStorage.getItem("id")
-    const statsURL = "http://192.168.100.6:8080/stats"
+    const token = window.sessionStorage.getItem("token") || window.localStorage.getItem("token")
+    const currentUserId = window.sessionStorage.getItem("id") || window.localStorage.getItem("id")
+    const statsURL = "/stats"
     const [stats, setStats] = useState<Stat[]>([])
     const [snackbarOpen, setSnackbarOpen] = useState(false)
     const [snackbarMsg, setSnackbarMsg] = useState("")
@@ -17,10 +18,10 @@ const UserStats: React.FC<{ isAppBarVisible: boolean }> = ({ isAppBarVisible }) 
     useEffect(() => {
         document.title = `Medidas - EyesFood`
         let queryParams = `?u=${currentUserId}`
-        axios.get(`${statsURL}${queryParams}`, {
+        api.get(`${statsURL}${queryParams}`, {
             withCredentials: true,
             headers: {
-                Authorization: "Bearer " + window.localStorage.token
+                Authorization: "Bearer " + token
             }
         })
         .then(res => {

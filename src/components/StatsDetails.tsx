@@ -11,7 +11,8 @@ import { UserHasStat } from '../interfaces/UserHasStat';
 import api from '../api';
 
 const StatsDetails: React.FC<{ isAppBarVisible: boolean }> = ({ isAppBarVisible }) => {
-    const currentUserId = window.localStorage.getItem("id")
+    const token = window.sessionStorage.getItem("token") || window.localStorage.getItem("token")
+    const currentUserId = window.sessionStorage.getItem("id") || window.localStorage.getItem("id")
     const {id }= useParams()
     const statsURL = "/stats"
     const userStatsURL = "/users-stats"
@@ -33,14 +34,14 @@ const StatsDetails: React.FC<{ isAppBarVisible: boolean }> = ({ isAppBarVisible 
         const fetchStat = api.get(`${statsURL}/${id}`, {
             withCredentials: true,
             headers: {
-                Authorization: "Bearer " + window.localStorage.token
+                Authorization: "Bearer " + token
             }
         })
 
         const fetchUserStats = api.get(`${userStatsURL}${userStatsQueryParams}`, {
             withCredentials: true,
             headers: {
-                Authorization: "Bearer " + window.localStorage.token
+                Authorization: "Bearer " + token
             }
         })
 
@@ -149,7 +150,7 @@ const StatsDetails: React.FC<{ isAppBarVisible: boolean }> = ({ isAppBarVisible 
         api.post(userStatsURL, newUserStat, {
             withCredentials: true,
             headers: {
-                Authorization: "Bearer " + window.localStorage.token
+                Authorization: "Bearer " + token
             }
         })
         .then(res => {
@@ -181,7 +182,7 @@ const StatsDetails: React.FC<{ isAppBarVisible: boolean }> = ({ isAppBarVisible 
         api.patch(`${userStatsURL}/${selectedUserStat?.id}`, newUserStat, {
             withCredentials: true,
             headers: {
-                Authorization: "Bearer " + window.localStorage.token
+                Authorization: "Bearer " + token
             }
         })
         .then(res => {
@@ -212,7 +213,7 @@ const StatsDetails: React.FC<{ isAppBarVisible: boolean }> = ({ isAppBarVisible 
         api.delete(`${userStatsURL}/${selectedUserStat?.id}`, {
             withCredentials: true,
             headers: {
-                Authorization: "Bearer " + window.localStorage.token
+                Authorization: "Bearer " + token
             }
         })
         .then(res => {
@@ -322,7 +323,7 @@ const StatsDetails: React.FC<{ isAppBarVisible: boolean }> = ({ isAppBarVisible 
                 </TableContainer>
             </Box>
                 
-                <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: "column", mb: 2, gap:2 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: "column", mb: 2, gap:2, width: "90%" }}>
                     <Typography variant="h6">Agregar nuevo registro</Typography>
                     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: "center", flexDirection: "row", gap:1 }}>
                         <TextField
@@ -330,7 +331,7 @@ const StatsDetails: React.FC<{ isAppBarVisible: boolean }> = ({ isAppBarVisible 
                             value={newEntryValue}
                             onChange={handleInputChange}
                             variant="outlined"   
-                            sx={{ width:100 }}
+                            fullWidth
                         />
                         <Button variant="contained" color="primary" disabled={newEntryValue===""} onClick={submitNew}>
                             Agregar
@@ -360,7 +361,7 @@ const StatsDetails: React.FC<{ isAppBarVisible: boolean }> = ({ isAppBarVisible 
                             labelFormatter={(label) => `Fecha: ${label}`}  // Customizing the X-axis label in the tooltip
                         />
                         <Legend />
-                        <Line type="monotone" dataKey="value" name="peso" stroke="#8884d8" activeDot={{ r: 8 }} />
+                        <Line type="monotone" dataKey="value" name={stat?.name} stroke="#8884d8" activeDot={{ r: 8 }} />
                     </LineChart>
                 </ResponsiveContainer>
             )}
