@@ -25,7 +25,6 @@ const UserStats: React.FC<{ isAppBarVisible: boolean }> = ({ isAppBarVisible }) 
             }
         })
         .then(res => {
-            console.log(res.data)
             setStats(res.data)
         })
         .catch(error => {
