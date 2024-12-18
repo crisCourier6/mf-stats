@@ -328,6 +328,7 @@ const StatsDetails: React.FC<{ isAppBarVisible: boolean }> = ({ isAppBarVisible 
                     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: "center", flexDirection: "row", gap:1 }}>
                         <TextField
                             label={`Valor (${stat?.unit})`}
+                            inputProps = {{maxLength: 20}}
                             value={newEntryValue}
                             onChange={handleInputChange}
                             variant="outlined"   
@@ -399,6 +400,7 @@ const StatsDetails: React.FC<{ isAppBarVisible: boolean }> = ({ isAppBarVisible 
                 }}>
                     <TextField
                         label={`Valor (${stat?.unit})`}
+                        inputProps = {{maxLength: 20}}
                         value={editEntryValue}
                         onChange={handleEditChange}
                         variant="outlined"   
