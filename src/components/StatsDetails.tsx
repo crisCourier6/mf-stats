@@ -9,6 +9,7 @@ import dayjs from 'dayjs';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { UserHasStat } from '../interfaces/UserHasStat';
 import api from '../api';
+import NavigateBack from './NavigateBack';
 
 const StatsDetails: React.FC<{ isAppBarVisible: boolean }> = ({ isAppBarVisible }) => {
     const token = window.sessionStorage.getItem("token") || window.localStorage.getItem("token")
@@ -261,20 +262,25 @@ const StatsDetails: React.FC<{ isAppBarVisible: boolean }> = ({ isAppBarVisible 
                     zIndex: 100,
                     boxShadow: 3,
                     display: "flex",
-                    flexDirection: "column",
+                    flexDirection: "row",
                     alignItems: "center",
                     borderBottom: "5px solid",
+                    borderLeft: "5px solid",
+                    borderRight: "5px solid",
                     borderColor: "secondary.main",
+                    color: "primary.contrastText",
                     boxSizing: "border-box"
                   }}
             >
-                <Typography variant='h5' width="100%"  color="primary.contrastText" sx={{py:1, borderLeft: "3px solid",
-                    borderRight: "3px solid",
-                    borderColor: "secondary.main",
-                    boxSizing: "border-box",
-                }}>
-                    {stat?.name}
-                </Typography>
+                    <Box sx={{display: "flex", flex: 1}}>
+                        <NavigateBack/>
+                    </Box>
+                    <Box sx={{display: "flex", flex: 6}}>
+                        <Typography variant='h6' width="100%"  color="primary.contrastText" sx={{py:1}}>
+                            {stat?.name}
+                        </Typography>
+                    </Box>
+                    <Box sx={{display: "flex", flex: 1}}></Box>
             </Box> 
             <Box sx={{ maxHeight: '400px', overflowY: 'auto', mb: 2 }}>
                 <TableContainer component={Paper} sx={{ marginBottom: 2 }}>

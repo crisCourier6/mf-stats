@@ -3,6 +3,7 @@ import api from '../api';
 import { Box, Card, CardContent, Grid, Typography, Button, Snackbar, SnackbarCloseReason, CardActions, Alert, CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { Stat } from '../interfaces/Stat';
+import NavigateBack from './NavigateBack';
 
 const UserStats: React.FC<{ isAppBarVisible: boolean }> = ({ isAppBarVisible }) => {
     const navigate = useNavigate()
@@ -75,20 +76,25 @@ const UserStats: React.FC<{ isAppBarVisible: boolean }> = ({ isAppBarVisible }) 
                     zIndex: 100,
                     boxShadow: 3,
                     display: "flex",
-                    flexDirection: "column",
+                    flexDirection: "row",
                     alignItems: "center",
                     borderBottom: "5px solid",
+                    borderLeft: "5px solid",
+                    borderRight: "5px solid",
                     borderColor: "secondary.main",
+                    color: "primary.contrastText",
                     boxSizing: "border-box"
                   }}
             >
-                <Typography variant='h5' width="100%"  color="primary.contrastText" sx={{py:1, borderLeft: "3px solid",
-                    borderRight: "3px solid",
-                    borderColor: "secondary.main",
-                    boxSizing: "border-box",
-                }}>
-                    Medidas
-                </Typography>
+                    <Box sx={{display: "flex", flex: 1}}>
+                        <NavigateBack/>
+                    </Box>
+                    <Box sx={{display: "flex", flex: 6}}>
+                        <Typography variant='h6' width="100%"  color="primary.contrastText" sx={{py:1}}>
+                            Mis medidas
+                        </Typography>
+                    </Box>
+                    <Box sx={{display: "flex", flex: 1}}></Box>
             </Box> 
 
             { stats.map((stat)=>{
